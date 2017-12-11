@@ -1,0 +1,1 @@
+Withdraw Transaction Date : 2017-12-08 11:00:17.822 Amount: 1.000,00 € From User: user1
