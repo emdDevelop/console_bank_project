@@ -71,7 +71,7 @@ namespace BankAccounts
         {
             using (Db ctx = new Db())
             {
-               // var usersList = ctx.Users.ToList();
+               //var usersList = ctx.Users.ToList();
                 var userAccount = ctx.Accounts.Single(i => i.User_id.Id == user.Id);
                 Console.SetCursorPosition(30, 10);
                 Console.Write($"Account Balance is: {userAccount.Amount}");
@@ -86,11 +86,18 @@ namespace BankAccounts
             {
                 using (Db ctx = new Db())
                 {
-                    //Show all users in bank
+                    //Show all users in bank except current user
                     var usersList = ctx.Users.ToList();
                     foreach (var user in usersList)
                     {
-                        Console.WriteLine($"{user.Id}.{user.Username}");
+                        if (user.Id != currentUser.Id)
+                        {
+                            Console.WriteLine($"{user.Id}.{user.Username}");
+                        }
+                        else
+                        {
+                            continue;
+                        }
                     }
                     //from the above menu the user must select a user 
                     Console.Write("\nSelect User : ");
@@ -101,6 +108,7 @@ namespace BankAccounts
                         int userId = int.Parse(Console.ReadLine());
                         //User who accept the deposit
                         var userAcount = ctx.Accounts.Single(i => i.User_id.Id == userId);
+                        Console.Write($"Your Account has {fromUser.Amount}\n");
                         //inform user to enter the deposit amount 
                         Console.Write("\nEnter Amount to deposit : ");
                         int depositAmount = int.Parse(Console.ReadLine());
