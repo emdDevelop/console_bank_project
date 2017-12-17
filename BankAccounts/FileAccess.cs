@@ -20,8 +20,13 @@ namespace BankAccounts
         //Methods
         public void CreateUserFile(List<string> transaction)
         {
+            //If list with transactions is empty then no need to create empty file
+            if (transaction.Count == 0)
+            {
+                Console.WriteLine("No need to create File.No Transactions had made");
+            }
             //if file path is not exist then create the today file statment
-            if (!File.Exists(path))
+            else if (!File.Exists(path))
             {
                 //Create a file to write to
                 using (StreamWriter sw = File.CreateText(path))

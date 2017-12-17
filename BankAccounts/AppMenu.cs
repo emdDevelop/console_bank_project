@@ -37,7 +37,7 @@ namespace BankAccounts
             string[] simpleMenu =
             {
                 " 1.View bank account\n",
-                " 2.Deposit to your account\n",
+                " 2.Deposit to Super Admin account\n",
                 " 3.Deposit to another Members bank account\n",
                 " 4.Send to the statement file todays transactions\n",
                 " 5.Exit the application\n",
@@ -75,14 +75,16 @@ namespace BankAccounts
                         break;
                     case 2:
                         Console.Clear();
-                        Console.Write($"Login User: {user.Username}\n\n");
-                        Console.Write(" 2.Deposit to your account\n");
-                        InternalOperations.DepositToMyAccount(user);
+                        Console.Write($"Login User: {user.Username}");
+                        Console.SetCursorPosition(30, 8);
+                        Console.Write(" 2.Deposit to Super Admin account");
+                        InternalOperations.DepositToAdminAccount(user);
                         Console.ReadKey();
                         break;
                     case 3:
                         Console.Clear();
-                        Console.Write($"Login User: {user.Username}\n\n");
+                        Console.Write($"Login User: {user.Username}");
+                        Console.SetCursorPosition(30, 8);
                         Console.Write(" 3.Deposit to another Members bank account\n");
                         InternalOperations.DepositToAccount(user);
                         Console.ReadKey();
@@ -97,6 +99,7 @@ namespace BankAccounts
                         break;
                     case 5:
                         Console.Clear();
+                        InternalOperations.CheckFileSendOnExit(user);
                         Console.SetCursorPosition(30, 8);
                         Console.Write("Press any key to Quit");
                         break;
@@ -115,6 +118,7 @@ namespace BankAccounts
         public static void SwitchSuperAdmin(User user)
         {
             int choice = 0;
+            bool continueAction= true;
             do
             {
                 SuperAdminAccount(user);
@@ -140,20 +144,44 @@ namespace BankAccounts
                         Console.ReadKey();
                         break;
                     case 3:
-                        Console.Clear();
-                        Console.Write($"Login User: {user.Username}");
-                        Console.Write(" 3.Deposit to Members bank account\n");
-                        InternalOperations.DepositToAccount(user);
-                        Console.WriteLine("\nPress any key to return to menu");
-                        Console.ReadKey();
+                        do
+                        {
+                            Console.Clear();
+                            Console.Write($"Login User: {user.Username}\n\n");
+                            Console.SetCursorPosition(30, 8);
+                            Console.Write(" 3.Deposit to Members bank account\n");
+                            InternalOperations.DepositToAccount(user);
+                            ConsoleKeyInfo key = Console.ReadKey();
+                            if (key.Key == ConsoleKey.Y)
+                            {
+                                Console.Clear();
+                                continueAction = true;
+                            }
+                            else
+                            {
+                                continueAction = false;
+                            }
+                        } while (continueAction);
                         break;
                     case 4:
-                        Console.Clear();
-                        Console.Write($"Login User: {user.Username}");
-                        Console.Write(" 4.Withdraw from Members bank account\n");
-                        InternalOperations.Withdraw();
-                        Console.WriteLine("\nPress any key to return to menu");
-                        Console.ReadKey();
+                        do
+                        {
+                            Console.Clear();
+                            Console.Write($"Login User: {user.Username}\n\n");
+                            Console.SetCursorPosition(30, 8);
+                            Console.Write(" 4.Withdraw from Members bank account\n");
+                            InternalOperations.Withdraw();
+                            ConsoleKeyInfo key = Console.ReadKey();
+                            if (key.Key == ConsoleKey.Y)
+                            {
+                                Console.Clear();
+                                continueAction = true;
+                            }
+                            else
+                            {
+                                continueAction = false;
+                            }
+                        } while (continueAction);
                         break;
                     case 5:
                         Console.Clear();
@@ -165,6 +193,7 @@ namespace BankAccounts
                         break;
                     case 6:
                         Console.Clear();
+                        InternalOperations.CheckFileSendOnExit(user);
                         Console.SetCursorPosition(30, 8);
                         Console.Write("Press any key to Quit");
                         break;
